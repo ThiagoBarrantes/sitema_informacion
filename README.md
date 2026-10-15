@@ -1,1 +1,0 @@
-# sitema_informacion
