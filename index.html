@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Prototipo de biblioteca escolar del Instituto Técnico Renault">
+  <title>Biblioteca Escolar | Instituto Técnico Renault</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="top-header">
+    <a class="brand" href="#" aria-label="Instituto Técnico Renault - Inicio">
+      <img class="brand-logo" src="https://www.itr.edu.ar/images/LogoITR-60.jpg" alt="Instituto Técnico Renault"
+           onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'brand-fallback',innerHTML:'INSTITUTO TÉCNICO<br><strong>RENAULT</strong>'}))">
+    </a>
+    <div class="user-menu" id="user-menu">
+      <button class="user-area" id="user-button" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="user-dropdown">
+        <span class="user-icon" id="user-avatar" aria-hidden="true">U</span>
+        <span>Hola, <span id="user-name">Usuario</span></span>
+        <span class="user-caret" aria-hidden="true">⌄</span>
+      </button>
+      <div class="user-dropdown hidden" id="user-dropdown" role="menu" aria-labelledby="user-button">
+        <button type="button" role="menuitem" data-user-action="rename">✎ Cambiar nombre</button>
+        <button type="button" role="menuitem" data-user-action="history">◷ Ver historial</button>
+        <button type="button" role="menuitem" data-user-action="reset">↺ Restablecer datos de ejemplo</button>
+        <button type="button" role="menuitem" data-user-action="logout" class="danger">⎋ Cerrar sesión</button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="main-nav" aria-label="Navegación principal">
+    <button class="nav-link active" data-section="inicio"><span aria-hidden="true">⌂</span> Inicio</button>
+    <button class="nav-link" data-section="prestamos"><span aria-hidden="true">▱</span> Préstamos</button>
+    <button class="nav-link" data-section="alumnos"><span aria-hidden="true">♙</span> Alumnos</button>
+    <button class="nav-link" data-section="libros"><span aria-hidden="true">▤</span> Libros</button>
+    <button class="nav-link" data-section="historial"><span aria-hidden="true">◷</span> Historial</button>
+  </nav>
+
+  <main class="page-layout">
+    <section class="main-content" id="inicio">
+      <div class="hero">
+        <h1>Biblioteca Escolar</h1>
+        <p class="subtitle">Sistema de gestión de préstamos y devoluciones de libros de la biblioteca del Instituto Técnico Renault.</p>
+      </div>
+
+      <section class="actions-section" aria-labelledby="actions-title">
+        <h2 id="actions-title" class="visually-hidden">¿Qué querés hacer?</h2>
+        <div class="action-cards">
+          <button class="action-card card-navy" data-action="prestamo">
+            <span class="action-title">Nuevo préstamo</span>
+            <span class="action-description">Registrar un libro a un alumno.</span>
+            <span class="action-arrow" aria-hidden="true">→</span>
+          </button>
+          <button class="action-card card-blue" data-action="devolucion">
+            <span class="action-title">Devolver libro</span>
+            <span class="action-description">Registrar la devolución de un libro.</span>
+            <span class="action-arrow" aria-hidden="true">→</span>
+          </button>
+          <button class="action-card card-gray" data-action="historial">
+            <span class="action-title">Ver historial</span>
+            <span class="action-description">Consultar los préstamos anteriores.</span>
+            <span class="action-arrow" aria-hidden="true">→</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="search-panel" id="search-panel" aria-labelledby="search-title">
+        <h2 id="search-title"><span aria-hidden="true">⌕</span> Buscar un libro</h2>
+        <form id="search-form" class="search-form">
+          <label class="visually-hidden" for="search-input">Título, autor o código del libro</label>
+          <input id="search-input" type="search" placeholder="Escribí título, autor o código..." autocomplete="off">
+          <button type="submit" class="primary-button">BUSCAR</button>
+        </form>
+        <p id="search-message" class="feedback" aria-live="polite"></p>
+      </section>
+
+      <section class="content-panel hidden" id="workspace" aria-live="polite">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">BIBLIOTECA ESCOLAR</p>
+            <h2 id="workspace-title">Nuevo préstamo</h2>
+          </div>
+          <button class="close-panel" id="close-workspace" aria-label="Cerrar panel">×</button>
+        </div>
+        <form id="loan-form" class="loan-form">
+          <label for="student-name">Nombre del alumno</label>
+          <input id="student-name" name="student" type="text" placeholder="Ej.: Juan Pérez" required>
+          <label for="book-select">Libro</label>
+          <select id="book-select" name="book" required>
+            <option value="">Seleccioná un libro</option>
+            <option>El principito — Antoine de Saint-Exupéry</option>
+            <option>Martín Fierro — José Hernández</option>
+            <option>El inventor de juegos — Pablo De Santis</option>
+            <option>Ficciones — Jorge Luis Borges</option>
+            <option>Don Quijote de la Mancha — Miguel de Cervantes</option>
+          </select>
+          <div class="form-row">
+            <div>
+              <label for="loan-date">Fecha del movimiento</label>
+              <input id="loan-date" name="date" type="date" required>
+            </div>
+            <div id="due-date-wrap">
+              <label for="due-date">Fecha de devolución prevista</label>
+              <input id="due-date" name="dueDate" type="date">
+            </div>
+          </div>
+          <button class="primary-button" type="submit" id="loan-submit">Confirmar préstamo</button>
+          <p id="form-message" class="feedback" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section class="content-panel hidden" id="records-panel">
+        <div class="panel-heading">
+          <div><p class="eyebrow">REGISTROS DE EJEMPLO</p><h2>Historial de préstamos</h2></div>
+          <button class="close-panel" id="close-records" aria-label="Cerrar historial">×</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Alumno</th><th>Libro</th><th>Fecha</th><th>Estado</th><th>Acción</th></tr></thead>
+            <tbody id="records-body"></tbody>
+          </table>
+        </div>
+        <p class="demo-note">Estos datos se guardan solo en este navegador para demostrar el funcionamiento del prototipo.</p>
+      </section>
+    </section>
+
+    <aside class="sidebar">
+      <section class="info-card">
+        <h2>Información útil</h2>
+        <div class="info-item"><h3>Horario de atención</h3><p>Lunes a Viernes <span class="sep">|</span> 7:45 a 17:00</p></div>
+        <div class="info-item"><h3>Ubicación</h3><p>Instituto Técnico Renault</p></div>
+        <div class="info-item"><h3>Consultas</h3><p><a href="mailto:biblioteca@itr.edu.ar">biblioteca@itr.edu.ar</a></p></div>
+      </section>
+    </aside>
+  </main>
+
+  <footer class="footer">
+    <span>Instituto Técnico Renault <span class="footer-divider">|</span> Biblioteca</span>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
